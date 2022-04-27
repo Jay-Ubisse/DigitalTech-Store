@@ -12,16 +12,16 @@ package digitaltech;
  public class Product {
     private String category;
     private String brand;
-    private short id;
+    private int id;
     
-    public Product (String category, String brand, short id) {
+    public Product (String category, String brand, int id) {
         this.category = category;
         this.brand = brand;
         this.id = id;
     }
 
     public String toString() {
-        return "Categoria: " + this.category + "Marca: " + this.brand + "Numero de serie: " + this.id;
+        return "Categoria: " + this.category + "\nMarca: " + this.brand + "\nNumero de serie: " + this.id;
     }
 
     public String getCategory() {
@@ -44,7 +44,7 @@ package digitaltech;
         this.brand = newBrand;
     }
 
-    public void setId(short newId) {
+    public void setId(int newId) {
         this.id = newId;
     }
  }

@@ -8,6 +8,8 @@
 package digitaltech;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+
 
 public class App {
 
@@ -16,9 +18,17 @@ public class App {
     static final String INVALID_OPTION = "\nOpcao invalida!";
     static final String USER = "usuario";
     static final String ADMIN = "administrador";
+
+    //objects used
+    static Scanner input;
+    static Roles roleObj;
+    static Product productObj;
+    static ArrayList<Product> list;
+
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        Roles roleObj = new Roles();
+        input = new Scanner(System.in);
+        roleObj = new Roles();
+        list = new ArrayList<>(30);
 
         int option;
         while(true) {
@@ -37,11 +47,11 @@ public class App {
             switch(option) {
                 case 1:
                     role = USER;
-                    checkRole(input, roleObj, role);
+                    checkRole(role);
                     break;
                 case 2:
                     role = ADMIN;
-                    checkRole(input, roleObj, role);
+                    checkRole(role);
                     break;
                 default:
                     System.out.println(INVALID_OPTION);
@@ -51,7 +61,7 @@ public class App {
         
     }
 
-    public static void checkRole(Scanner input, Roles roleObj, String role) {
+    public static void checkRole(String role) {
         System.out.println("\nIntroduza o nome de " + role);
         String name = input.nextLine();
         System.out.println("Introduza a sua palavra-passe");
@@ -61,19 +71,19 @@ public class App {
             if(!roleObj.verifyAdminName(name) || !roleObj.verifyAdminPassword(password)) {
                 System.out.println("\nNome de administrador ou palavra-passe incorrecto!");
             } else {
-                roleMenu(input, roleObj, role);
+                roleMenu(role);
             }
         } else if(role.equals(USER)) {
             if(!roleObj.verifyUserName(name) || !roleObj.verifyUserPassword(password)) {
                 System.out.println("\nNome de usuario ou palavra-passe incorrecto!");
             } else {
-                roleMenu(input, roleObj, role);
+                roleMenu(role);
             }
         }
 
     }
 
-    public static void roleMenu(Scanner input, Roles roleObj, String role) {
+    public static void roleMenu(String role) {
         int option;
         if(role.equals(ADMIN)) {
             while(true) {
@@ -81,21 +91,21 @@ public class App {
                 System.out.println("======== " + roleObj.getAdminName() + " ========\n");
                 System.out.println("""
                         1. Vender
-                        2. Cadastrar
+                        2. Registar
                         3. Editar dados
                         4. Ver inventario
                         5. Sair
                         """);
     
                 option = Integer.parseInt(input.nextLine());
-                if(option == 3) break;
+                if(option == 5) break;
     
                 switch(option) {
                     case 1:
                         System.out.println("Area de venda em manuntencao");
                         break;
                     case 2:
-                        System.out.println("Area de cadastro em manuntencao");
+                        register(input);
                         break;
                     case 3:
                         System.out.println("Area de edicao em manuntencao");
@@ -134,6 +144,22 @@ public class App {
             }
         }
 
+    }
+
+    public static void register(Scanner input) {
+        System.out.println("\n<<<<<<< Registro de produtos >>>>>>>\n");
+        System.out.println("Introduza a categoria do produto");
+        String category = input.nextLine();
+        System.out.println("\nIntroduza a marca do produto");
+        String brand = input.nextLine();
+        System.out.println("\nIntroduza o numero de serie do produto");
+        int id = Integer.parseInt(input.nextLine());
+
+        list.add(new Product(category, brand, id));
+        System.out.println("\n==========================================\n");
+        System.out.println("PRODUTO REGISTRADO COM SUCESSO!");
+        System.out.println("\nCategoria: " + category + "\nMarca: " + brand + "\nNumero de serie: " + id);
+        System.out.println("\n==========================================\n");
     }
 
 }
