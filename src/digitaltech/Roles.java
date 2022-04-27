@@ -7,9 +7,9 @@ public class Roles {
     private String adminPassword;
 
     public Roles() {
-        this.userName = "user";
+        this.userName = "MyUserName";
         this.userPassword = "s3cr3t";
-        this.adminName = "admin";
+        this.adminName = "MyAdminName";
         this.adminPassword = "s3cr3t0";
     }
 
@@ -43,6 +43,14 @@ public class Roles {
 
     public void uptadeAdminPassword(String newPassword) {
         this.adminPassword = newPassword;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public String getAdminName() {
+        return this.adminName;
     }
 
 }
