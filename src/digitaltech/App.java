@@ -13,7 +13,7 @@ public class App {
 
     //Frequently used strings
     static final String STORE_NAME = "\n|-----( DigitalTech Store )-----|\n";
-    static final String INVALID_OPTION = "Opcao invalida!";
+    static final String INVALID_OPTION = "\nOpcao invalida!";
     static final String USER = "usuario";
     static final String ADMIN = "administrador";
     public static void main(String[] args) {
@@ -52,20 +52,20 @@ public class App {
     }
 
     public static void checkRole(Scanner input, Roles roleObj, String role) {
-        System.out.println("Introduza o nome de " + role);
+        System.out.println("\nIntroduza o nome de " + role);
         String name = input.nextLine();
         System.out.println("Introduza a sua palavra-passe");
         String password = input.nextLine();
 
         if(role.equals(ADMIN)) {
             if(!roleObj.verifyAdminName(name) || !roleObj.verifyAdminPassword(password)) {
-                System.out.println("Nome de administrador ou palavra-passe incorrecto!");
+                System.out.println("\nNome de administrador ou palavra-passe incorrecto!");
             } else {
                 roleMenu(input, roleObj, role);
             }
         } else if(role.equals(USER)) {
             if(!roleObj.verifyUserName(name) || !roleObj.verifyUserPassword(password)) {
-                System.out.println("Nome de usuario ou palavra-passe incorrecto!");
+                System.out.println("\nNome de usuario ou palavra-passe incorrecto!");
             } else {
                 roleMenu(input, roleObj, role);
             }
@@ -78,9 +78,8 @@ public class App {
         if(role.equals(ADMIN)) {
             while(true) {
                 System.out.println(STORE_NAME);
-                System.out.println("\n===== Nome: " + roleObj.getAdminName() + "=====\n");
+                System.out.println("======== " + roleObj.getAdminName() + " ========\n");
                 System.out.println("""
-                        Qual e o seu cargo?
                         1. Vender
                         2. Cadastrar
                         3. Editar dados
@@ -112,9 +111,8 @@ public class App {
         } else if(role.equals(USER)) {
             while(true) {
                 System.out.println(STORE_NAME);
-                System.out.println("\n===== Nome: " + roleObj.getUserName() + "=====\n");
+                System.out.println("======== " + roleObj.getUserName() + " ========\n");
                 System.out.println("""
-                        Qual e o seu cargo?
                         1. Vender
                         2. Ver inventario
                         3. Sair
