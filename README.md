@@ -1,6 +1,6 @@
 ## About de Project
 
-DigitalTech-Store is a java projects for a software for register and sell computers, cellphones and Tv's.
+DigitalTech-Store is a java project for a software for register and sell computers, cellphones and Tv's.
 (More description soon)
 
 ## How to use
