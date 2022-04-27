@@ -47,4 +47,8 @@ package digitaltech;
     public void setId(int newId) {
         this.id = newId;
     }
+
+    public boolean verifyId(int id) {
+        return (this.id == id);
+    }
  }

@@ -105,10 +105,10 @@ public class App {
                         System.out.println("Area de venda em manuntencao");
                         break;
                     case 2:
-                        register(input);
+                        register();
                         break;
                     case 3:
-                        System.out.println("Area de edicao em manuntencao");
+                        modify();
                         break;
                     case 4:
                         System.out.println("Area de inventario em manuntencao");
@@ -146,7 +146,7 @@ public class App {
 
     }
 
-    public static void register(Scanner input) {
+    public static void register() {
         System.out.println("\n<<<<<<< Registro de produtos >>>>>>>\n");
         System.out.println("Introduza a categoria do produto");
         String category = input.nextLine();
@@ -156,10 +156,39 @@ public class App {
         int id = Integer.parseInt(input.nextLine());
 
         list.add(new Product(category, brand, id));
-        System.out.println("\n==========================================\n");
+        System.out.println("\n===========================================\n");
         System.out.println("PRODUTO REGISTRADO COM SUCESSO!");
         System.out.println("\nCategoria: " + category + "\nMarca: " + brand + "\nNumero de serie: " + id);
-        System.out.println("\n==========================================\n");
+        System.out.println("\n===========================================\n");
+    }
+
+    public static void modify() {
+        System.out.println("\n<<<<<<< Modificar informacoes do produto >>>>>>>\n");
+        System.out.println("Introduza o numero de serie do produto");
+        int id = Integer.parseInt(input.nextLine());
+        boolean found = false;
+        for(int i = 0; i < list.size(); i++) {
+            if(list.get(0).verifyId(id)) {
+                found = true;
+                System.out.println("\n<<<<<<< Registro de produtos >>>>>>>\n");
+                System.out.println("Introduza a nova categoria do produto");
+                String category = input.nextLine();
+                System.out.println("\nIntroduza a nova marca do produto");
+                String brand = input.nextLine();
+                System.out.println("\nIntroduza o novo numero de serie do produto");
+                int newId = Integer.parseInt(input.nextLine());
+
+                list.set(i, new Product(category, brand, newId));
+                System.out.println("\n==========================================\n");
+                System.out.println("PRODUTO ACTUALIZADO COM SUCESSO!");
+                System.out.println("\nCategoria: " + category + "\nMarca: " + brand + "\nNumero de serie: " + id);
+                System.out.println("\n==========================================\n");
+                break;
+            }
+        }
+        if(!found) {
+            System.out.println("\nProduto nao encontrado!");
+        }
     }
 
 }
