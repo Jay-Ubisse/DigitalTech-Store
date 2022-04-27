@@ -21,7 +21,7 @@ public class App {
         Roles roleObj = new Roles();
 
         int option;
-        do {
+        while(true) {
             System.out.println(STORE_NAME);
             System.out.println("""
                     Qual e o seu cargo?
@@ -31,6 +31,7 @@ public class App {
                     """);
 
             option = Integer.parseInt(input.nextLine());
+            if(option == 3) break;
 
             String role;
             switch(option) {
@@ -46,7 +47,7 @@ public class App {
                     System.out.println(INVALID_OPTION);
                     break;
             }
-        } while(option != 3);
+        }
         
     }
 
@@ -75,7 +76,7 @@ public class App {
     public static void roleMenu(Scanner input, Roles roleObj, String role) {
         int option;
         if(role.equals(ADMIN)) {
-            do {
+            while(true) {
                 System.out.println(STORE_NAME);
                 System.out.println("\n===== Nome: " + roleObj.getAdminName() + "=====\n");
                 System.out.println("""
@@ -88,6 +89,7 @@ public class App {
                         """);
     
                 option = Integer.parseInt(input.nextLine());
+                if(option == 3) break;
     
                 switch(option) {
                     case 1:
@@ -106,9 +108,9 @@ public class App {
                         System.out.println(INVALID_OPTION);
                         break;
                 }
-            } while(option != 5);
+            }
         } else if(role.equals(USER)) {
-            do {
+            while(true) {
                 System.out.println(STORE_NAME);
                 System.out.println("\n===== Nome: " + roleObj.getUserName() + "=====\n");
                 System.out.println("""
@@ -119,7 +121,7 @@ public class App {
                         """);
 
                 option = Integer.parseInt(input.nextLine());
-
+                if(option == 3) break;
                 switch(option) {
                     case 1:
                         System.out.println("Area de venda em manuntencao");
@@ -131,7 +133,7 @@ public class App {
                         System.out.println(INVALID_OPTION);
                         break;
                 }
-            } while(option != 3);
+            }
         }
 
     }
