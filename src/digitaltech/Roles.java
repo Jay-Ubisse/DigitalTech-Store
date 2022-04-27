@@ -28,4 +28,21 @@ public class Roles {
     public boolean verifyAdminName(String name) {
         return (this.adminName.equals(name));
     }
+
+    public void uptadeUserName(String newName) {
+        this.userName = newName;
+    }
+
+    public void uptadeAdminName(String newName) {
+        this.adminName = newName;
+    }
+
+    public void uptadeUserPassword(String newPassword) {
+        this.userPassword = newPassword;
+    }
+
+    public void uptadeAdminPassword(String newPassword) {
+        this.adminPassword = newPassword;
+    }
+
 }
