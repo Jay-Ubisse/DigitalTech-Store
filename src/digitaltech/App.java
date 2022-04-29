@@ -154,11 +154,13 @@ public class App {
         String brand = input.nextLine();
         System.out.println("\nIntroduza o numero de serie do produto");
         int id = Integer.parseInt(input.nextLine());
+        System.out.println("\nIntroduza o preco do produto");
+        float price = Float.parseFloat(input.nextLine());
 
-        list.add(new Product(category, brand, id));
+        list.add(new Product(category, brand, id, price));
         System.out.println("\n===========================================\n");
         System.out.println("PRODUTO REGISTRADO COM SUCESSO!");
-        System.out.println("\nCategoria: " + category + "\nMarca: " + brand + "\nNumero de serie: " + id);
+        System.out.println("\nCategoria: " + category + "\nMarca: " + brand + "\nNumero de serie: " + id + "\nPreco: " + price);
         System.out.println("\n===========================================\n");
     }
 
@@ -172,16 +174,18 @@ public class App {
                 found = true;
                 System.out.println("\n<<<<<<< Registro de produtos >>>>>>>\n");
                 System.out.println("Introduza a nova categoria do produto");
-                String category = input.nextLine();
+                String newCategory = input.nextLine();
                 System.out.println("\nIntroduza a nova marca do produto");
-                String brand = input.nextLine();
+                String newBrand = input.nextLine();
                 System.out.println("\nIntroduza o novo numero de serie do produto");
                 int newId = Integer.parseInt(input.nextLine());
+                System.out.println("\nIntroduza o preco do produto");
+                float newPrice = Float.parseFloat(input.nextLine());
 
-                list.set(i, new Product(category, brand, newId));
+                list.set(i, new Product(newCategory, newBrand, newId, newPrice));
                 System.out.println("\n==========================================\n");
                 System.out.println("PRODUTO ACTUALIZADO COM SUCESSO!");
-                System.out.println("\nCategoria: " + category + "\nMarca: " + brand + "\nNumero de serie: " + id);
+                System.out.println("\nCategoria: " + newCategory + "\nMarca: " + newBrand + "\nNumero de serie: " + newId + "\nPreco: " + newPrice);
                 System.out.println("\n==========================================\n");
                 break;
             }

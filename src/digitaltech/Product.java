@@ -13,15 +13,17 @@ package digitaltech;
     private String category;
     private String brand;
     private int id;
+    private float price;
     
-    public Product (String category, String brand, int id) {
+    public Product (String category, String brand, int id, float price) {
         this.category = category;
         this.brand = brand;
         this.id = id;
+        this.price = price;
     }
 
     public String toString() {
-        return "Categoria: " + this.category + "\nMarca: " + this.brand + "\nNumero de serie: " + this.id;
+        return "Categoria: " + this.category + "\nMarca: " + this.brand + "\nNumero de serie: " + this.id + "\nPreco: " + this.price;
     }
 
     public String getCategory() {
@@ -36,6 +38,10 @@ package digitaltech;
         return this.id;
     }
 
+    public float getPrice() {
+        return this.price;
+    }
+
     public void setCategory(String newCategory) {
         this.category = newCategory;
     }
@@ -46,6 +52,10 @@ package digitaltech;
 
     public void setId(int newId) {
         this.id = newId;
+    }
+
+    public void setPrice(int newPrice) {
+        this.price = newPrice;
     }
 
     public boolean verifyId(int id) {
