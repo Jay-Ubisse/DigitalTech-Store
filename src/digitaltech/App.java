@@ -108,7 +108,7 @@ public class App {
                         register();
                         break;
                     case 3:
-                        System.out.println("Em manutencao");
+                        modify();
                         break;
                     case 4:
                         System.out.println("Area de inventario em manuntencao");
@@ -187,6 +187,57 @@ public class App {
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Cateoria nao selecionada. Deve selecionar uma categoria");
         }
+    }
+
+    public static void modify() {
+        System.out.println("\n<<<<<<< Modificar informacoes do produto >>>>>>>\n");
+        System.out.println("""
+            Escolha a categoria do produto que deseja modificar
+            1. Computador
+            2. Celular
+            3. Tv
+                """);
+        try {
+            String category;
+            char option = input.nextLine().toLowerCase().charAt(0);
+            switch (option) {
+                case '1':
+                    category = "computador";
+                    break;
+                case '2':
+                    category = "celular";
+                    break;
+                case '3':
+                    category = "tv";
+                    break;
+                default:
+                    throw new IllegalArgumentException("\nOpcao ivalida");
+            }
+            System.out.println("\nIntroduza numero de serie do produto");
+            int id = Integer.parseInt(input.nextLine());
+
+            if(productHandling.containsProduct(category, id)) {
+                System.out.println("Introduza a nova categoria do produto");
+                String newCategory = input.nextLine();
+                System.out.println("\nIntroduza a nova marca do produto");
+                String newBrand = input.nextLine();
+                System.out.println("\nIntroduza o novo numero de serie do produto");
+                int newId = Integer.parseInt(input.nextLine());
+                System.out.println("\nIntroduza o preco do produto");
+                float newPrice = Float.parseFloat(input.nextLine());
+
+                productHandling.editProduct(category, id, newCategory, newBrand, newId, newPrice);
+                System.out.println("\n==========================================\n");
+                System.out.println("PRODUTO ACTUALIZADO COM SUCESSO!");
+                System.out.println("\nCategoria: " + newCategory + "\nMarca: " + newBrand + "\nNumero de serie: " + newId + "\nPreco: " + newPrice);
+                System.out.println("\n==========================================\n");
+            } else {
+                System.out.println("\nProduto nao encontrado");
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+            
     }
 
     
