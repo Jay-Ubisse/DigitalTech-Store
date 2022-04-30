@@ -8,7 +8,6 @@
 package digitaltech;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 
 
 public class App {
@@ -23,12 +22,13 @@ public class App {
     static Scanner input;
     static Roles roleObj;
     static Product productObj;
-    static ArrayList<Product> list;
+    static DataStructure productHandling;
 
     public static void main(String[] args) {
+        
         input = new Scanner(System.in);
         roleObj = new Roles();
-        list = new ArrayList<>(30);
+        productHandling = new DataStructure();
 
         int option;
         while(true) {
@@ -108,7 +108,7 @@ public class App {
                         register();
                         break;
                     case 3:
-                        modify();
+                        System.out.println("Em manutencao");
                         break;
                     case 4:
                         System.out.println("Area de inventario em manuntencao");
@@ -148,51 +148,47 @@ public class App {
 
     public static void register() {
         System.out.println("\n<<<<<<< Registro de produtos >>>>>>>\n");
-        System.out.println("Introduza a categoria do produto");
-        String category = input.nextLine();
-        System.out.println("\nIntroduza a marca do produto");
-        String brand = input.nextLine();
-        System.out.println("\nIntroduza o numero de serie do produto");
-        int id = Integer.parseInt(input.nextLine());
-        System.out.println("\nIntroduza o preco do produto");
-        float price = Float.parseFloat(input.nextLine());
-
-        list.add(new Product(category, brand, id, price));
-        System.out.println("\n===========================================\n");
-        System.out.println("PRODUTO REGISTRADO COM SUCESSO!");
-        System.out.println("\nCategoria: " + category + "\nMarca: " + brand + "\nNumero de serie: " + id + "\nPreco: " + price);
-        System.out.println("\n===========================================\n");
-    }
-
-    public static void modify() {
-        System.out.println("\n<<<<<<< Modificar informacoes do produto >>>>>>>\n");
-        System.out.println("Introduza o numero de serie do produto");
-        int id = Integer.parseInt(input.nextLine());
-        boolean found = false;
-        for(int i = 0; i < list.size(); i++) {
-            if(list.get(0).verifyId(id)) {
-                found = true;
-                System.out.println("\n<<<<<<< Registro de produtos >>>>>>>\n");
-                System.out.println("Introduza a nova categoria do produto");
-                String newCategory = input.nextLine();
-                System.out.println("\nIntroduza a nova marca do produto");
-                String newBrand = input.nextLine();
-                System.out.println("\nIntroduza o novo numero de serie do produto");
-                int newId = Integer.parseInt(input.nextLine());
-                System.out.println("\nIntroduza o preco do produto");
-                float newPrice = Float.parseFloat(input.nextLine());
-
-                list.set(i, new Product(newCategory, newBrand, newId, newPrice));
-                System.out.println("\n==========================================\n");
-                System.out.println("PRODUTO ACTUALIZADO COM SUCESSO!");
-                System.out.println("\nCategoria: " + newCategory + "\nMarca: " + newBrand + "\nNumero de serie: " + newId + "\nPreco: " + newPrice);
-                System.out.println("\n==========================================\n");
-                break;
+        System.out.println("""
+            Escolha a categoria do produto
+            1. Computador
+            2. Celular
+            3. Tv
+                """);
+        String category;
+        try {
+            char option = input.nextLine().toLowerCase().charAt(0);
+            switch (option) {
+                case '1':
+                    category = "computador";
+                    break;
+                case '2':
+                    category = "celular";
+                    break;
+                case '3':
+                    category = "tv";
+                    break;
+                default:
+                    throw new IllegalArgumentException("\nOpcao ivalida");
             }
-        }
-        if(!found) {
-            System.out.println("\nProduto nao encontrado!");
+            System.out.println("\nIntroduza a marca do produto");
+            String brand = input.nextLine().toLowerCase();
+            System.out.println("\nIntroduza o numero de serie do produto");
+            int id = Integer.parseInt(input.nextLine());
+            System.out.println("\nIntroduza o preco do produto");
+            float price = Float.parseFloat(input.nextLine());
+
+            productHandling.saveProduct(new Product(category, brand, id, price));
+            System.out.println("\n===========================================\n");
+            System.out.println("PRODUTO REGISTRADO COM SUCESSO!");
+            System.out.println("\nCategoria: " + category + "\nMarca: " + brand + "\nNumero de serie: " + id + "\nPreco: " + price);
+            System.out.println("\n===========================================\n");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Cateoria nao selecionada. Deve selecionar uma categoria");
         }
     }
+
+    
 
 }
