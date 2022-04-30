@@ -54,7 +54,7 @@ package digitaltech;
         this.id = newId;
     }
 
-    public void setPrice(int newPrice) {
+    public void setPrice(float newPrice) {
         this.price = newPrice;
     }
 

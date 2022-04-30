@@ -10,6 +10,8 @@ public class DataStructure {
     private ArrayList<Product> tvList;
     private HashMap<String, ArrayList<Product>> map;
 
+    public final String NOT_FOUND = "Produto nao encontrado";
+
     public DataStructure() {
         this.phoneList =  new ArrayList<>();
         this.computerList =  new ArrayList<>();
@@ -46,17 +48,41 @@ public class DataStructure {
         if(this.containsProduct(product.getCategory(), product.getId())) {
             this.map.get(product.getCategory()).remove(product);
         } else {
-            throw new IllegalArgumentException("Produto nao encontrado");
+            throw new IllegalArgumentException(NOT_FOUND);
         }
     }
 
-    public void editProduct(String oldCategory, int oldId, String newCategory, String newBrand, int newId, float newPrice) {
-        if(this.containsProduct(oldCategory, oldId)) {
-            this.removeProduct(getProduct(oldCategory, oldId));
-            Product newProduct = new Product(newCategory, newBrand, newId, newPrice);
-            this.map.get(newCategory).add(newProduct);
+    public void modifyCategory(String oldCategory, int id, String newCategory) {
+        if(this.containsProduct(oldCategory, id)) {
+            Product newProduct = new Product(newCategory, this.getProduct(oldCategory, id).getBrand(), id, this.getProduct(oldCategory, id).getPrice());
+            this.removeProduct(this.getProduct(oldCategory, id));
+            this.saveProduct(newProduct);
         } else {
-            throw new IllegalArgumentException("Produto nao encontrado");
+            throw new IllegalArgumentException(NOT_FOUND);
+        }
+    }
+
+    public void modifyBrand(String category, int id, String newBrand) {
+        if(this.containsProduct(category, id)) {
+           this.getProduct(category, id).setBrand(newBrand);      
+        } else {
+            throw new IllegalArgumentException(NOT_FOUND);
+        }
+    }
+
+    public void modifyId(String category, int id, int newId) {
+        if(this.containsProduct(category, id)) {
+           this.getProduct(category, id).setId(newId);      
+        } else {
+            throw new IllegalArgumentException(NOT_FOUND);
+        }
+    }
+
+    public void modifyPrice(String category, int id, float newPrice) {
+        if(this.containsProduct(category, id)) {
+           this.getProduct(category, id).setPrice(newPrice);      
+        } else {
+            throw new IllegalArgumentException(NOT_FOUND);
         }
     }
 

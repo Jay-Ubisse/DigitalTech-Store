@@ -99,24 +99,8 @@ public class App {
     
                 option = Integer.parseInt(input.nextLine());
                 if(option == 5) break;
-    
-                switch(option) {
-                    case 1:
-                        System.out.println("Area de venda em manuntencao");
-                        break;
-                    case 2:
-                        register();
-                        break;
-                    case 3:
-                        modify();
-                        break;
-                    case 4:
-                        System.out.println("Area de inventario em manuntencao");
-                        break;
-                    default:
-                        System.out.println(INVALID_OPTION);
-                        break;
-                }
+                roleOptions(role, option);
+                
             }
         } else if(role.equals(USER)) {
             while(true) {
@@ -127,20 +111,9 @@ public class App {
                         2. Ver inventario
                         3. Sair
                         """);
-
                 option = Integer.parseInt(input.nextLine());
                 if(option == 3) break;
-                switch(option) {
-                    case 1:
-                        System.out.println("Area de venda em manuntencao");
-                        break;
-                    case 2:
-                        System.out.println("Area de inventario em manuntencao");
-                        break;
-                    default:
-                        System.out.println(INVALID_OPTION);
-                        break;
-                }
+                roleOptions(role, option);
             }
         }
 
@@ -154,22 +127,8 @@ public class App {
             2. Celular
             3. Tv
                 """);
-        String category;
         try {
-            char option = input.nextLine().toLowerCase().charAt(0);
-            switch (option) {
-                case '1':
-                    category = "computador";
-                    break;
-                case '2':
-                    category = "celular";
-                    break;
-                case '3':
-                    category = "tv";
-                    break;
-                default:
-                    throw new IllegalArgumentException("\nOpcao ivalida");
-            }
+            String category = checkCategoryOption();
             System.out.println("\nIntroduza a marca do produto");
             String brand = input.nextLine().toLowerCase();
             System.out.println("\nIntroduza o numero de serie do produto");
@@ -178,10 +137,7 @@ public class App {
             float price = Float.parseFloat(input.nextLine());
 
             productHandling.saveProduct(new Product(category, brand, id, price));
-            System.out.println("\n===========================================\n");
-            System.out.println("PRODUTO REGISTRADO COM SUCESSO!");
-            System.out.println("\nCategoria: " + category + "\nMarca: " + brand + "\nNumero de serie: " + id + "\nPreco: " + price);
-            System.out.println("\n===========================================\n");
+            System.out.println(sucessfullOperationMessage(category, brand, id, price));;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         } catch (StringIndexOutOfBoundsException e) {
@@ -198,48 +154,117 @@ public class App {
             3. Tv
                 """);
         try {
-            String category;
-            char option = input.nextLine().toLowerCase().charAt(0);
-            switch (option) {
-                case '1':
-                    category = "computador";
-                    break;
-                case '2':
-                    category = "celular";
-                    break;
-                case '3':
-                    category = "tv";
-                    break;
-                default:
-                    throw new IllegalArgumentException("\nOpcao ivalida");
-            }
+            String category = checkCategoryOption();
             System.out.println("\nIntroduza numero de serie do produto");
             int id = Integer.parseInt(input.nextLine());
 
             if(productHandling.containsProduct(category, id)) {
-                System.out.println("Introduza a nova categoria do produto");
-                String newCategory = input.nextLine();
-                System.out.println("\nIntroduza a nova marca do produto");
-                String newBrand = input.nextLine();
-                System.out.println("\nIntroduza o novo numero de serie do produto");
-                int newId = Integer.parseInt(input.nextLine());
-                System.out.println("\nIntroduza o preco do produto");
-                float newPrice = Float.parseFloat(input.nextLine());
-
-                productHandling.editProduct(category, id, newCategory, newBrand, newId, newPrice);
-                System.out.println("\n==========================================\n");
-                System.out.println("PRODUTO ACTUALIZADO COM SUCESSO!");
-                System.out.println("\nCategoria: " + newCategory + "\nMarca: " + newBrand + "\nNumero de serie: " + newId + "\nPreco: " + newPrice);
-                System.out.println("\n==========================================\n");
+                System.out.println("""
+                O que deseja modificar?
+                1. Categoria
+                2. Marca
+                3. Numero de serie
+                4. Preco
+                    """);
+                char changeOption = input.nextLine().toLowerCase().charAt(0);
+                switch (changeOption) {
+                    case '1':
+                        System.out.println("""
+                            Escolha a nova categoria do produto
+                            1. Computador
+                            2. Celular
+                            3. Tv
+                                """);
+                        String newCategory = checkCategoryOption();
+                        productHandling.modifyCategory(category, id, newCategory);
+                        System.out.println(sucessfullOperationMessage(newCategory, productHandling.getProduct(newCategory, id).getBrand(), productHandling.getProduct(newCategory, id).getId(), productHandling.getProduct(newCategory, id).getPrice()));
+                        break;
+                    case '2':
+                        System.out.println("\nIntroduza a nova marca do produto");
+                        String newBrand = input.nextLine();
+                        productHandling.modifyBrand(category, id, newBrand);
+                        System.out.println(sucessfullOperationMessage(productHandling.getProduct(category, id).getCategory(), newBrand, productHandling.getProduct(category, id).getId(), productHandling.getProduct(category, id).getPrice()));
+                        break;
+                    case '3':
+                        System.out.println("\nIntroduza o novo numero de serie do produto");
+                        int newId = Integer.parseInt(input.nextLine());
+                        productHandling.modifyId(category, id, newId);
+                        System.out.println(sucessfullOperationMessage(productHandling.getProduct(category, id).getCategory(), productHandling.getProduct(category, id).getBrand(), newId, productHandling.getProduct(category, id).getPrice()));
+                        break;
+                    case '4':
+                        System.out.println("\nIntroduza o preco do produto");
+                        float newPrice = Float.parseFloat(input.nextLine());
+                        productHandling.modifyPrice(category, id, newPrice);
+                        System.out.println(sucessfullOperationMessage(productHandling.getProduct(category, id).getCategory(), productHandling.getProduct(category, id).getBrand(), productHandling.getProduct(category, id).getId(), newPrice));
+                        break;
+                    default:
+                        throw new IllegalArgumentException(INVALID_OPTION);
+                }
+                
             } else {
                 System.out.println("\nProduto nao encontrado");
             }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Nao selecionou uma categoria. Deve selecionar uma categoria.");
         }
             
     }
 
     
+    private static String sucessfullOperationMessage(String category, String brand, int id, float price) {
+        return "\n==========================================\n" +
+                "PRODUTO ACTUALIZADO COM SUCESSO!" +
+                "\nCategoria: " + category + "\nMarca: " + brand + "\nNumero de serie: " + id + "\nPreco: " + price +
+                "\n==========================================\n";
+    }
 
+    private static String checkCategoryOption() {
+        char option = input.nextLine().toLowerCase().charAt(0);
+        switch (option) {
+            case '1':
+                return "computador";
+            case '2':
+                return "celular";
+            case '3':
+                return "tv";
+            default:
+                throw new IllegalArgumentException(INVALID_OPTION);
+        }
+    }
+
+    private static void roleOptions(String role, int option) {
+        if(role.equals(USER)) {
+            switch(option) {
+                case 1:
+                    System.out.println("Area de venda em manuntencao");
+                    break;
+                case 2:
+                    System.out.println("Area de inventario em manuntencao");
+                    break;
+                default:
+                    System.out.println(INVALID_OPTION);
+                    break;
+            }
+        } else if(role.equals(ADMIN)) {
+            switch(option) {
+                case 1:
+                    System.out.println("Area de venda em manuntencao");
+                    break;
+                case 2:
+                    register();
+                    break;
+                case 3:
+                    modify();
+                    break;
+                case 4:
+                    System.out.println("Area de inventario em manuntencao");
+                    break;
+                default:
+                    System.out.println(INVALID_OPTION);
+                    break;
+            }
+        }
+    }
 }
